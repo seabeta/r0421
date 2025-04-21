@@ -116,7 +116,6 @@ shap.force_plot(
     explainer.expected_value,  # 基准值  
     shap_values.values[0],  # 第一个样本的 SHAP 值  
     features[0],  # 第一个样本的特征值 
-    pd.DataFrame([feature_values], columns=feature_ranges.keys())， 
     matplotlib=True,  # 使用 Matplotlib 绘图  
     show=False  # 不立即显示该图  
 )  
