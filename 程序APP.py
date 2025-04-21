@@ -106,20 +106,21 @@ if st.button("Make Prediction"):  # 如果点击了预测按钮
     # Show the plot
     st.pyplot(plt)  # 显示图表
 
-# SHAP 值可视化  
-explainer = shap.Explainer(model)  # 创建 SHAP 解释器  
-shap_values = explainer(features)  # 计算 SHAP 值  
+# 计算 SHAP 值  
+    features_df = pd.DataFrame(features, columns=feature_ranges.keys())  # 创建 DataFrame  
+    explainer = shap.Explainer(model)  
+    shap_values = explainer(features_df)  
 
- # 生成 SHAP 力图  
-st.subheader("SHAP Force Plot")  # 添加子标题  
-shap.force_plot(  
-    explainer.expected_value,  # 基准值  
-    shap_values.values[0],  # 第一个样本的 SHAP 值  
-    features[0],  # 第一个样本的特征值 
-    matplotlib=True,  # 使用 Matplotlib 绘图  
-    show=False  # 不立即显示该图  
-)  
+    # 生成 SHAP 力图  
+    st.subheader("SHAP Force Plot")  
+    shap.force_plot(  
+        explainer.expected_value,  
+        shap_values.values[0],  
+        features_df.iloc[0],  # 使用 DataFrame 中的第一个样本  
+        matplotlib=True,  
+        show=False  
+    )  
 
     # 保存并显示 SHAP 图  
-plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)  
-st.image("shap_force_plot.png")  # 使用 Streamlit 展示图像 
+    plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)  
+    st.image("shap_force_plot.png")  
