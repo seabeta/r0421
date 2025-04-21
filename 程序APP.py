@@ -105,3 +105,11 @@ if st.button("Make Prediction"):  # 如果点击了预测按钮
 
     # Show the plot
     st.pyplot(plt)  # 显示图表
+
+    import shap
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(X_test)
+    plt.figure()
+    shap.summary_plot(shap_values, X_test, feature_names=X_test.columns, plot_type="dot", show=False)
+    plt.savefig("shap_plot.png", bbox_inches='tight', dpi=1200)
+    st.image("shap_force_plot.png")
