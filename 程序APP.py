@@ -106,17 +106,16 @@ if st.button("Make Prediction"):  # 如果点击了预测按钮
     # Show the plot
     st.pyplot(plt)  # 显示图表
 
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(pd.DataFrame([feature_values], columns=feature_ranges.keys()))
+    # 创建SHAP解释器
+explainer = shap.TreeExplainer(model)
 
-    # 生成 SHAP 力图
-    class_index = predicted_class  # 当前预测类别
-    shap_fig = shap.force_plot(
-        explainer.expected_value[class_index],
-        shap_values[:,:,class_index],
-        pd.DataFrame([feature_values], columns=feature_ranges.keys()),
-        matplotlib=True,
-    )
-    # 保存并显示 SHAP 图
-    plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
-    st.image("shap_force_plot.png")
+# 计算SHAP值
+shap_values = explainer.shap_values(features)
+
+# 绘制单个样本的SHAP解释（Force Plot）
+shap.force_plot(explainer.expected_value, shap_values[0], features.iloc[0], matplotlib=True, show=False)
+
+
+# 保存并显示 SHAP 图
+plt.savefig("shap_force_plot.png", bbox_inches='tight', dpi=1200)
+st.image("shap_force_plot.png")
