@@ -12,7 +12,7 @@ model = joblib.load('XGBoost.pkl')
 feature_ranges = {
     "age": {"type": "numerical", "min": 18, "max": 100, "default": 71},
     "BAR": {"type": "numerical", "min": 0, "max": 100, "default": 40},
-    "FOIS": {"type": "numerical", "min": 1, "max": 7, "default": 3},
+    "FOIS": {"type": "numerical", "min": 1, "max": 6, "default": 3},
     "Thalamic_injury": {"type": "categorical", "options": [0, 1], "default": 0},
     "Cerebellar_injury":{"type": "categorical", "options": [0, 1], "default": 0},
     "Tracheotomy": {"type": "categorical", "options": [0, 1], "default": 0},
